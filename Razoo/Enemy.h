@@ -8,18 +8,16 @@
 
 #include <string>
 
-using namespace std;
-
 class Enemy
 {
 private:
-	string m_name;
+	std::string m_name;
 	int m_confidence;
 	int m_humor;
 	int m_speed;
 
 public:
-	Enemy(string p_name, int p_confidence, int p_humor, int p_speed)
+	Enemy(std::string p_name, int p_confidence, int p_humor, int p_speed)
 	{
 		m_name = p_name;
 		m_confidence = p_confidence;
@@ -27,14 +25,14 @@ public:
 		m_speed = p_speed;
 	}
 
-	string GetName()
+	std::string GetName()
 	{
 		return m_name;
 	}
 
 	int GetConfidence()
 	{
-		return m_confidence;
+		return Enemy::m_confidence;
 	}
 
 	int GetHumor()
@@ -46,8 +44,6 @@ public:
 	{
 		return m_speed;
 	}
-
-	//Don't think I need setters, atm.
 
 };
 #endif

@@ -1,0 +1,25 @@
+************* ITEMS FILE *************
+No. of Items:	3
+**************************************
+Name:	ASD
+Desc:	asdasdasdasd
+Weight:	123
+Confidence:	123
+Humor:	123
+Speed:	123
+**************************************
+Name:	ASD
+Desc:	asdasdasdasd
+Desc:	asdasdasdasd
+Weight:	123
+Confidence:	123
+Humor:	123
+Speed:	123
+**************************************
+Name:	ASD
+Desc:	asdasdasdasd
+Desc:	asdasdasdasd
+Weight:	123
+Confidence:	123
+Humor:	123
+Speed:	123

@@ -26,8 +26,8 @@ public:
 		m_confidence = p_confidence;
 		m_humor = p_humor;
 		m_speed = p_speed;
-		m_currentRoom = p_currentRoom;
-		m_inventory  = p_inventory;
+		m_currentRoom = p_currentRoom;	//Name of current room for saving.
+		m_inventory  = p_inventory;		//List of item names, for saving
 	}
 
 	string GetName()

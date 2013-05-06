@@ -9,6 +9,7 @@ class Item
 {
 private:
 	string m_name;
+	string m_description;
 	int m_weight;
 	int m_confidence;
 	int m_humor;
@@ -27,6 +28,10 @@ public:
 	string GetName()
 	{
 		return m_name;
+	}
+	string GetDescription()
+	{
+		return m_description;
 	}
 
 	int GetWeight()
@@ -48,9 +53,6 @@ public:
 	{
 		return m_speed;
 	}
-
-	//Again, don't think I'll need setters here for the time being.
-
 
 };
 

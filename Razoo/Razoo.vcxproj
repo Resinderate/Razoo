@@ -76,13 +76,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Array.h" />
     <ClInclude Include="DLinkedList.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Initialiser.h" />
+    <ClInclude Include="HashTable.h" />
+    <ClInclude Include="Initializer.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Login.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="SLinkedList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

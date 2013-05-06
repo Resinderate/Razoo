@@ -1,0 +1,11 @@
+************* ROOM FILE *************
+No. of Rooms:	3
+*************************************
+Name:	ASD
+Exits:	*:The Farm:The Ticket Booth:*
+*************************************
+Name:	ASD
+Exits:	*:The Farm:The Ticket Booth:*
+*************************************
+Name:	ASD
+Exits:	*:The Farm:The Ticket Booth:*

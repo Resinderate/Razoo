@@ -1,0 +1,17 @@
+************* ENEMY FILE *************
+No. of Enemies:	3
+**************************************
+Name:	ASD
+Confidence:	123
+Humor:	123
+Speed:	123
+**************************************
+Name:	ASD
+Confidence:	123
+Humor:	123
+Speed:	123
+**************************************
+Name:	ASD
+Confidence:	123
+Humor:	123
+Speed:	123

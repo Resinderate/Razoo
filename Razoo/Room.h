@@ -10,6 +10,7 @@
 
 #include <string>
 #include "Inventory.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -17,11 +18,13 @@ class Room
 {
 private:
 	string m_name;
+	string m_description;
 	Inventory m_inventory;
 	Room* m_north;
 	Room* m_south;
 	Room* m_east;
 	Room* m_west;
+	Enemy* m_enemy;
 
 public:
 	Room(string p_name, Inventory p_inventory, Room* p_north, Room* p_south, Room* p_east, Room* p_west)
@@ -32,6 +35,7 @@ public:
 		m_south = p_south;
 		m_east = p_east;
 		m_west = p_west;
+		m_enemy = 0;
 	}
 
 	string GetName()
@@ -62,6 +66,16 @@ public:
 	Room* GetWest()
 	{
 		return m_west;
+	}
+
+	Enemy* GetEnemy()
+	{
+		return m_enemy;
+	}
+
+	void SetEnemy(Enemy* p_enemy)
+	{
+		m_enemy = p_enemy;
 	}
 
 	//Don't think I need setters for the time being.
