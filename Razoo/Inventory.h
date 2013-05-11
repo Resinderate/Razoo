@@ -3,6 +3,7 @@
 
 #include "Item.h"
 #include "DLinkedList.h"
+#include "Array.h"
 
 class Inventory
 {
@@ -11,6 +12,22 @@ private:
 	int m_weight;
 	int m_maxWeight;
 public:
+	Inventory(int p_maxWeight)
+	{
+		m_maxWeight = p_maxWeight;
+		m_weight = 0;
+	}
+
+	Inventory()
+	{
+		m_maxWeight = 100;
+		m_weight = 0;
+	}
+
+	~Inventory()
+	{
+		
+	}
 
 	int GetWeight()
 	{
@@ -22,17 +39,62 @@ public:
 		return m_maxWeight;
 	}
 
-	int AddItem(Item* p_item)
+	int Size()
 	{
-		if(p_item->GetWeight + m_weight <= m_maxWeight)
+		return m_inventory.GetCount();
+	}
+
+	Array<std::string>& GetItemNames()
+	{
+		int count = m_inventory.GetCount();
+		Array<std::string> content(count);
+
+		if(count != 0)
 		{
-			//add item pointer.
+			Array<std::string> content(count);
+			DListIterator<Item*> itr = m_inventory.GetIterator();
+			itr.Start();
+			for(int i = 0; i < count; i++)
+			{
+				content.insert(itr.Item()->GetName(), i);
+				itr.Forth();
+			}
+			return content;
+		}
+		else
+			return content; //size will be 0
+	}
+
+	
+	bool AddItem(Item* p_item)
+	{
+		if(p_item->GetWeight() + m_weight <= m_maxWeight)
+		{
+			m_inventory.Append(p_item);
 		}
 		else
 		{
-			//Too heavy, error msg.
+			return false;
 		}
+		return true;
 	}
+
+	Item* SearchByName(std::string p_name)
+	{
+		DListIterator<Item*> itr = m_inventory.GetIterator();
+		itr.Start();
+
+		for(int i = 0; i < m_inventory.GetCount(); i++)
+		{
+			if(itr.Item()->GetName() == p_name)
+				return itr.Item();
+			else
+				itr.Forth();
+		}
+		//Not found.
+		return 0;
+	}
+	
 
 };
 #endif

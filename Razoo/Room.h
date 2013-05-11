@@ -12,6 +12,7 @@
 #include "Inventory.h"
 #include "Enemy.h"
 
+
 using namespace std;
 
 class Room
@@ -27,10 +28,10 @@ private:
 	Enemy* m_enemy;
 
 public:
-	Room(string p_name, Inventory p_inventory, Room* p_north, Room* p_south, Room* p_east, Room* p_west)
+	Room(string p_name, string p_desc, Room* p_north, Room* p_south, Room* p_east, Room* p_west)
 	{
 		m_name = p_name;
-		m_inventory = p_inventory;
+		m_description = p_desc;
 		m_north = p_north;
 		m_south = p_south;
 		m_east = p_east;
@@ -38,9 +39,19 @@ public:
 		m_enemy = 0;
 	}
 
+	Room()
+	{
+
+	}
+
 	string GetName()
 	{
 		return m_name;
+	}
+
+	string GetDesc()
+	{
+		return m_description;
 	}
 
 	Inventory& GetInventory()
@@ -48,7 +59,7 @@ public:
 		return m_inventory;
 	}
 
-	Room* GetNoth()
+	Room* GetNorth()
 	{
 		return m_north;
 	}
@@ -73,12 +84,43 @@ public:
 		return m_enemy;
 	}
 
+	void SetNorth(Room* p_north)
+	{
+		m_north = p_north;
+	}
+
+	void SetSouth(Room* p_south)
+	{
+		m_south = p_south;
+	}
+
+	void SetEast(Room* p_east)
+	{
+		m_east = p_east;
+	}
+
+	void SetWest(Room* p_west)
+	{
+		m_west = p_west;
+	}
+
 	void SetEnemy(Enemy* p_enemy)
 	{
 		m_enemy = p_enemy;
 	}
 
-	//Don't think I need setters for the time being.
+	/*
+	void GiveRandomEnemy(Array<Enemy>& p_enemies)
+	{
+		m_enemy = Initializer::GiveRandomEnemy(p_enemies);
+	}
+
+	void GiveRandomItem(Array<Item>& p_items)
+	{
+		Item* item = Initializer::GiveRandomItem(p_items);
+		m_inventory.AddItem(item);
+	}
+	*/
 
 };
 
@@ -97,5 +139,20 @@ public:
 		m_start = p_start;
 		m_end = p_end;
 	}
+
+	~Level()
+	{
+	}
+
+	Room* GetStart()
+	{
+		return m_start;
+	}
+
+	Room* GetEnd()
+	{
+		return m_end;
+	}
+
 };
 #endif

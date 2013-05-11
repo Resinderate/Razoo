@@ -6,6 +6,8 @@
 
 #include "SLinkedList.h"
 #include "Array.h"
+#include "Room.h"
+
 
 
 
@@ -20,6 +22,17 @@ class HashEntry
 public:
 	KeyType m_key;
 	Datatype m_data;
+
+	HashEntry(KeyType p_key, Datatype p_data)
+	{
+		m_key = p_key;
+		m_data = p_data;
+	}
+	
+	HashEntry()
+	{
+
+	}
 };
 
 //=======================================================
@@ -57,6 +70,11 @@ public:
 		m_count = 0;
 	}
 
+	~HashTable()
+	{
+		
+	}
+
 	//=======================================================
 	//Name:				Insert
 	//Description:		Insert a new key, data pair
@@ -67,9 +85,7 @@ public:
 	void Insert(KeyType p_key, Datatype p_data)
 	{
 		//create an entry object
-		Entry entry;
-		entry.m_data = p_data;
-		entry.m_key = p_key;
+		Entry entry(p_key, p_data);
 
 		//get the hash value for the key, and modulo
 		//it so that it fits ion the table

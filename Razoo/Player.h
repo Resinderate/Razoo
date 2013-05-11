@@ -2,16 +2,17 @@
 #define PLAYER_H
 
 #include <string>
+#include <fstream>
+
 #include "Room.h"
 #include "Inventory.h"
+#include "Array.h"
 
-
-using namespace std;
 
 class Player
 {
 private:
-	string m_name;
+	std::string m_name;
 	int m_health;
 	int m_confidence;
 	int m_humor;
@@ -19,7 +20,7 @@ private:
 	Room* m_currentRoom;
 	Inventory m_inventory;
 public:
-	Player(string p_name, int p_health, int p_confidence, int p_humor, int p_speed, Room* p_currentRoom, Inventory p_inventory)
+	Player(std::string p_name, int p_health, int p_confidence, int p_humor, int p_speed, Room* p_currentRoom, Inventory p_inventory)
 	{
 		m_name = p_name;
 		m_health = p_health;
@@ -30,7 +31,23 @@ public:
 		m_inventory  = p_inventory;		//List of item names, for saving
 	}
 
-	string GetName()
+	Player()
+	{
+		m_name = "";
+		m_health = 0;
+		m_confidence = 0;
+		m_humor = 0;
+		m_speed = 0;
+		m_currentRoom = 0;
+		m_inventory  = 0;
+	}
+
+	~Player()
+	{
+
+	}
+
+	std::string GetName()
 	{
 		return m_name;
 	}
@@ -85,6 +102,69 @@ public:
 		m_speed = p_speed;
 	}
 
+	void MoveNorth()
+	{
+		m_currentRoom = m_currentRoom->GetNorth();
+	}
+
+	void MoveSouth()
+	{
+		m_currentRoom = m_currentRoom->GetSouth();
+	}
+
+	void MoveEast()
+	{
+		m_currentRoom = m_currentRoom->GetEast();
+	}
+	void MoveWest()
+	{
+		m_currentRoom = m_currentRoom->GetWest();
+	}
+
+	bool PickupItem(Item* p_item)
+	{
+		if(m_inventory.AddItem(p_item))
+		{
+			m_confidence += p_item->GetConfidence();
+			m_humor += p_item->GetHumor();
+			m_speed =+ p_item->GetSpeed();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	void SaveGame() //Bad saving of file.
+	{
+		ofstream savefile(m_name + ".txt");
+		savefile << "********** " << m_name << " player file **********" << endl;
+		savefile << "Username::" << endl;
+		savefile << m_name << endl;
+		savefile << "Health::" << endl;
+		savefile << m_health << endl;
+		savefile << "Confidence::" << endl;
+		savefile << m_confidence << endl;
+		savefile << "Humor::" << endl;
+		savefile << m_humor << endl;
+		savefile << "Speed::" << endl;
+		savefile << m_speed << endl;
+		savefile << "CurrentRoom::" << endl;
+		if(m_currentRoom != 0)
+		{
+			savefile << m_currentRoom->GetName() << endl;
+			savefile << "Inventory::::" << endl;
+			savefile << "No. of Items::" << endl;
+			savefile << m_inventory.Size() << endl;
+			Array<std::string> itemnames = m_inventory.GetItemNames();
+			for(int i = 0; i < itemnames.size(); i++)
+			{
+				savefile << itemnames[i] << endl;
+			}
+		}
+		savefile.close();
+	}
 };
 
 #endif
