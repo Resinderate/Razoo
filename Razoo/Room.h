@@ -11,6 +11,9 @@
 #include <string>
 #include "Inventory.h"
 #include "Enemy.h"
+#include "Random.h"
+
+
 
 
 using namespace std;
@@ -109,18 +112,34 @@ public:
 		m_enemy = p_enemy;
 	}
 
-	/*
+	
 	void GiveRandomEnemy(Array<Enemy>& p_enemies)
 	{
-		m_enemy = Initializer::GiveRandomEnemy(p_enemies);
+		//First see if there will actually be an enemy.
+		if(Random::RandomInt(1, 100) > 30)   //70% chance of getting an enemy
+		{
+			int count = p_enemies.size();
+			int index = Random::RandomInt(0, count);
+			m_enemy = &(p_enemies[index]);
+		}
+		else
+		{
+			m_enemy = 0;
+		}
 	}
 
 	void GiveRandomItem(Array<Item>& p_items)
 	{
-		Item* item = Initializer::GiveRandomItem(p_items);
-		m_inventory.AddItem(item);
+		Item* item;
+		if(Random::RandomInt(1, 100) > 20)   //80% of getting an item
+		{
+			int count = p_items.size();
+			int index = Random::RandomInt(0, count);
+			item = &(p_items[index]);
+			m_inventory.AddItem(item);
+		}
+		//else dont add anything
 	}
-	*/
 
 };
 

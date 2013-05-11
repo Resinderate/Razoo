@@ -63,7 +63,9 @@ public:
 	{
 		string input;
 		cout << p_prompt;
-		cin >> input;
+		char in[256];
+		cin.getline(in, 256);
+		input.assign(in);
 		while(1)
 		{
 			if(cin.good())

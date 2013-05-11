@@ -4,6 +4,7 @@
 #include "Item.h"
 #include "DLinkedList.h"
 #include "Array.h"
+#include <algorithm>
 
 class Inventory
 {
@@ -83,10 +84,12 @@ public:
 	{
 		DListIterator<Item*> itr = m_inventory.GetIterator();
 		itr.Start();
-
+		std::transform(p_name.begin(), p_name.end(), p_name.begin(), ::tolower);
 		for(int i = 0; i < m_inventory.GetCount(); i++)
 		{
-			if(itr.Item()->GetName() == p_name)
+			std::string search = itr.Item()->GetName();
+			std::transform(search.begin(), search.end(), search.begin(), ::tolower);
+			if(search == p_name)
 				return itr.Item();
 			else
 				itr.Forth();

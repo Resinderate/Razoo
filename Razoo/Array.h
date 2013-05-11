@@ -23,6 +23,11 @@ public :
 		m_size = p_size;
 
 	}
+
+	Array()
+	{
+
+	}
 	//------------------------------
 	//name: Array::~Array
 	//description:This deconstructs the array

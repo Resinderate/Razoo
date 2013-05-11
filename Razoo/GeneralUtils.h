@@ -3,10 +3,7 @@
 
 #include "Player.h"
 #include <iostream>
-#include <stdio.h>      /* NULL */
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
-class Room;
+
 
 using namespace std;
 
@@ -109,6 +106,9 @@ public:
 				cout << ":";
 			cout << "\t\t- To the west you can see: " << player.GetCurrentRoom()->GetWest()->GetName() << endl;
 		}
+		for(int i = 0; i < border; i++)
+				cout << ":";
+		cout << endl;
 
 		//repeated for the 3 others.
 
@@ -120,13 +120,28 @@ public:
 
 			for(int i = 0; i < border; i++)
 				cout << ":";
+			cout << endl;
+			for(int i = 0; i < border; i++)
+				cout << ":";
 			cout << "Items in this location:" << endl;
 
 			for(int i = 0; i < items.size(); i++)
 			{
-				cout << "\t\t- A " << items[i] << endl;
+				for(int i = 0; i < border; i++)
+				cout << ":";
+				cout << "\t- A " << items[i] << endl;
 			}
 
+		}
+
+		if(player.GetCurrentRoom()->GetEnemy() != 0)
+		{
+			for(int i = 0; i < border; i++)
+				cout << ":";
+			cout << endl;
+			for(int i = 0; i < border; i++)
+				cout << ":";
+			cout << "\t- A  " << player.GetCurrentRoom()->GetEnemy()->GetName() << " is blocking your way!" << endl;
 		}
 
 
@@ -138,38 +153,7 @@ public:
 
 	}
 
-	static Enemy* GiveRandomEnemy(Array<Enemy>& p_enemies)
-	{
-		Enemy* result = 0;
-
-		//First see if there will actually be an enemy.
-		if(GeneralUtils::RandomInt(1, 100) > 30)   //70% chance of getting an enemy
-		{
-			int count = p_enemies.size();
-			int index = GeneralUtils::RandomInt(0, count);
-			result = &(p_enemies[index]);
-		}
-		else
-		{
-			return result;
-		}
-	}
-
-	static Item* GiveRandomItem(Array<Item>& p_items)
-	{
-		Item* result;
-		if(GeneralUtils::RandomInt(1, 100) > 20)   //80% of getting an item
-		{
-			int count = p_items.size();
-			int index = GeneralUtils::RandomInt(0, count);
-			result = &(p_items[index]);
-			return result;
-		}
-		else
-		{
-			return 0;
-		}
-	}
+	
 
 	/*
 
@@ -182,12 +166,7 @@ public:
 		return p_index.length();
 	}
 
-	//Return random int in the range
-	static int RandomInt(int lo, int hi)
-	{
-		srand (time(NULL));
-		return rand() % (hi-lo) + lo;
-	}
+	
 
 };
 #endif

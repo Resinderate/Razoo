@@ -9,8 +9,8 @@ class Parser
 {
 private:
 	Player m_player;
-	Enemy* m_enemies;
-	Item* m_items;
+	Array<Enemy> m_enemies;
+	Array<Item> m_items;
 
 	std::string WordAt(std::string p_input, int p_index)
 	{
@@ -30,22 +30,65 @@ private:
 
 	void Go(std::string p_input)
 	{
+		std::string key = WordAt(p_input, 1);
 
+		if(key == "north" && m_player.GetCurrentRoom()->GetNorth() != 0)
+		{
+			m_player.MoveNorth();
+			m_player.GetCurrentRoom()->GiveRandomEnemy(m_enemies);
+			m_player.GetCurrentRoom()->GiveRandomItem(m_items);
+			cout << "Went North!" << endl;
+		}
+		else if(key == "south" && m_player.GetCurrentRoom()->GetSouth() != 0)
+		{
+			m_player.MoveSouth();
+			m_player.GetCurrentRoom()->GiveRandomEnemy(m_enemies);
+			m_player.GetCurrentRoom()->GiveRandomItem(m_items);
+		}
+		else if(key == "east" && m_player.GetCurrentRoom()->GetEast() != 0)
+		{
+			m_player.MoveEast();
+			m_player.GetCurrentRoom()->GiveRandomEnemy(m_enemies);
+			m_player.GetCurrentRoom()->GiveRandomItem(m_items);
+		}
+		else if(key == "west" && m_player.GetCurrentRoom()->GetWest() != 0)
+		{
+			m_player.MoveWest();
+			m_player.GetCurrentRoom()->GiveRandomEnemy(m_enemies);
+			m_player.GetCurrentRoom()->GiveRandomItem(m_items);
+		}
+		else
+			cout << "Go where?" << std::endl;
 	}
 
 	void Examine(std::string p_input)
 	{
+		std::string key = WordAt(p_input, 1);
 
+		Item* search = m_player.GetInventory().SearchByName(key);
+		if(search == 0)
+			search = m_player.GetCurrentRoom()->GetInventory().SearchByName(key);
+
+		if(search != 0)
+			cout <<  search->GetDescription() << endl;
+		else
+			cout << "The item you are trying to examine doesn't appear to be in your inventory, or this room!" << endl;
 	}
 
 	void Fight(std::string p_input)
 	{
-
+		//Can assume that if they are trying to fight something, and there can only be one enemy in the room, as long as there is actually an enemy present we can go ahead and fight it.
+		if(m_player.GetCurrentRoom()->GetEnemy() != 0)
+		{
+			//Fight scene, maybe new method
+		}
+		else
+			cout << "I don't see anything to fight here!" << endl;
 	}
 
 	void Help(std::string p_input)
 	{
-
+		//print help
 	}
 
 	void ViewInventory(std::string p_input)
@@ -81,6 +124,12 @@ public:
 		m_enemies = p_enemies;
 		m_items = p_items;
 	}
+
+	Parser()
+	{
+		//wut
+	}
+
 	~Parser()
 	{
 

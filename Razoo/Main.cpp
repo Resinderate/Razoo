@@ -16,6 +16,7 @@
 using namespace std;
 
 void GameLoop(Parser& parser, Player& player, Level& level);
+std::string WordAt(std::string p_input, int p_index);
 
 int main()
 {
@@ -31,11 +32,9 @@ int main()
 	Array<Item> items(3);
 	Initializer::InitializeItems(items, "itemsfile.txt");
 
-
-
 	Array<Enemy> enemies(3);
 	Initializer::InitializeEnemies(enemies, "enemiesfile.txt");
-
+	
 	Login login;
 	Player p1;
 	string filename = login.LoginToGame();
@@ -44,6 +43,7 @@ int main()
 	//NOW WE HAVE A PLAYER TO WORK WITH
 	Parser parser(p1, enemies, items);
 	GameLoop(parser, p1, level);
+	
 
 	
 	cin.ignore();
@@ -60,20 +60,33 @@ void GameLoop(Parser& parser, Player& player, Level& level)
 	//Checks on health and room.
 	//win or lose
 
+
+
 	GeneralUtils::PrintInfo(player);
-
-	string input = InputUtils::GetString(">");
-
-	/*
 	while(player.GetCurrentRoom() != level.GetEnd() && player.GetHealth() > 0)
 	{
-		GeneralUtils::PrintInfo(player);
-
 		string input = InputUtils::GetString(">");
+		parser.Parse(input);
 	}
-	*/
 
 
 }
+
+std::string WordAt(std::string p_input, int p_index)
+	{
+		std::string output;
+		int startpos = 0;
+		int endpos;
+
+		for(int i = 0; i < p_index+1; i++)
+		{
+			endpos = p_input.find_first_of(' ', startpos);
+			output = p_input.substr(startpos, endpos - startpos);
+			cout << output << i << endl;
+			startpos = endpos+1;
+		}
+
+		return output;
+	}
 
 
