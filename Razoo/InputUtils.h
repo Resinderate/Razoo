@@ -54,11 +54,12 @@ public:
 		return input;
 	}
 
-	////////////////////////////////
-
-
-
-	///////////////////////////////////
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	static string GetString(string p_prompt)
 	{
 		string input;

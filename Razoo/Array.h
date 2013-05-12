@@ -36,7 +36,6 @@ public :
 		//if the array is not null, delete it
 		if(m_array !=0){
 			delete[]m_array;
-		
 		}
 		m_array =0;
 	}

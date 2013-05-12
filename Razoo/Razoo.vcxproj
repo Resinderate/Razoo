@@ -79,12 +79,16 @@
     <ClInclude Include="Array.h" />
     <ClInclude Include="DLinkedList.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GeneralUtils.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="Initializer.h" />
+    <ClInclude Include="InputUtils.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Login.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="SLinkedList.h" />
   </ItemGroup>

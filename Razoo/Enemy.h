@@ -18,6 +18,12 @@ private:
 	int m_speed;
 
 public:
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Enemy(std::string p_name, std::string p_description, int p_confidence, int p_humor, int p_speed)
 	{
 		m_name = p_name;
@@ -27,6 +33,12 @@ public:
 		m_speed = p_speed;
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Enemy()
 	{
 		m_name = "";
@@ -36,6 +48,12 @@ public:
 		m_speed = 0;
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	std::string GetName()
 	{
 		return m_name;

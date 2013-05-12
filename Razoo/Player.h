@@ -20,6 +20,12 @@ private:
 	Room* m_currentRoom;
 	Inventory m_inventory;
 public:
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Player(std::string p_name, int p_health, int p_confidence, int p_humor, int p_speed, Room* p_currentRoom, Inventory p_inventory)
 	{
 		m_name = p_name;
@@ -31,6 +37,12 @@ public:
 		m_inventory  = p_inventory;		//List of item names, for saving
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Player()
 	{
 		m_name = "";
@@ -42,11 +54,18 @@ public:
 		m_inventory  = 0;
 	}
 
+	
 	~Player()
 	{
 
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	std::string GetName()
 	{
 		return m_name;
@@ -82,6 +101,11 @@ public:
 		return m_inventory;
 	}
 
+	void SetName(std::string p_name)
+	{
+		m_name =p_name;
+	}
+
 	void SetHealth(int p_health)
 	{
 		m_health = p_health;
@@ -102,32 +126,73 @@ public:
 		m_speed = p_speed;
 	}
 
+	void SetCurrentRoom(Room* p_currentRoom)
+	{
+		m_currentRoom = p_currentRoom;
+	}
+
+	void SetInventory(Inventory p_inventory)
+	{
+		m_inventory = p_inventory;
+	}
+
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	void MoveNorth()
 	{
 		m_currentRoom = m_currentRoom->GetNorth();
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	void MoveSouth()
 	{
 		m_currentRoom = m_currentRoom->GetSouth();
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	void MoveEast()
 	{
 		m_currentRoom = m_currentRoom->GetEast();
 	}
+
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	void MoveWest()
 	{
 		m_currentRoom = m_currentRoom->GetWest();
 	}
 
-	bool PickupItem(Item* p_item)
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
+	bool PickupItem(Item& p_item)
 	{
 		if(m_inventory.AddItem(p_item))
 		{
-			m_confidence += p_item->GetConfidence();
-			m_humor += p_item->GetHumor();
-			m_speed =+ p_item->GetSpeed();
+			m_confidence += p_item.GetConfidence();
+			m_humor += p_item.GetHumor();
+			m_speed =+ p_item.GetSpeed();
 			return true;
 		}
 		else
@@ -136,8 +201,15 @@ public:
 		}
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	void SaveGame() //Bad saving of file.
 	{
+		ReduceStats();
 		ofstream savefile(m_name + ".txt");
 		savefile << "********** " << m_name << " player file **********" << endl;
 		savefile << "Username::" << endl;
@@ -157,13 +229,49 @@ public:
 			savefile << "Inventory::::" << endl;
 			savefile << "No. of Items::" << endl;
 			savefile << m_inventory.Size() << endl;
-			Array<std::string> itemnames = m_inventory.GetItemNames();
-			for(int i = 0; i < itemnames.size(); i++)
-			{
-				savefile << itemnames[i] << endl;
-			}
+			m_inventory.PrintNamesFile(savefile);
 		}
 		savefile.close();
+	}
+
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
+	void UpdateStats()
+	{
+		int count = m_inventory.Size();
+
+		for(int i = 0; i <count; i++)
+		{
+			m_inventory.TotalStats(m_confidence, m_humor, m_speed);
+		}
+	}
+
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
+	void ReduceStats()
+	{
+		int minusConfidence = 0;
+		int minusHumor = 0;
+		int minusSpeed = 0;
+
+		int count = m_inventory.Size();
+
+		for(int i = 0; i <count; i++)
+		{
+			m_inventory.TotalStats(minusConfidence, minusHumor, minusSpeed);
+		}
+
+		m_confidence -= minusConfidence;
+		m_humor -= minusHumor;
+		m_speed -= minusSpeed;
 	}
 };
 

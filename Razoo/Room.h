@@ -23,7 +23,7 @@ class Room
 private:
 	string m_name;
 	string m_description;
-	Inventory m_inventory;
+	Item* m_inventory;
 	Room* m_north;
 	Room* m_south;
 	Room* m_east;
@@ -31,6 +31,12 @@ private:
 	Enemy* m_enemy;
 
 public:
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Room(string p_name, string p_desc, Room* p_north, Room* p_south, Room* p_east, Room* p_west)
 	{
 		m_name = p_name;
@@ -40,13 +46,33 @@ public:
 		m_east = p_east;
 		m_west = p_west;
 		m_enemy = 0;
+		m_inventory = 0;
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Room()
 	{
-
+		m_name = "";
+		m_description = "";
+		m_north = 0;
+		m_south = 0;
+		m_east = 0;
+		m_west = 0;
+		m_enemy = 0;
+		m_inventory = 0;
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	string GetName()
 	{
 		return m_name;
@@ -57,7 +83,7 @@ public:
 		return m_description;
 	}
 
-	Inventory& GetInventory()
+	Item* GetInventory()
 	{
 		return m_inventory;
 	}
@@ -87,6 +113,11 @@ public:
 		return m_enemy;
 	}
 
+	void SetInventory(Item* p_item)
+	{
+		m_inventory = p_item;
+	}
+
 	void SetNorth(Room* p_north)
 	{
 		m_north = p_north;
@@ -112,7 +143,12 @@ public:
 		m_enemy = p_enemy;
 	}
 
-	
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	void GiveRandomEnemy(Array<Enemy>& p_enemies)
 	{
 		//First see if there will actually be an enemy.
@@ -128,31 +164,46 @@ public:
 		}
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	void GiveRandomItem(Array<Item>& p_items)
 	{
-		Item* item;
+		
 		if(Random::RandomInt(1, 100) > 20)   //80% of getting an item
 		{
 			int count = p_items.size();
 			int index = Random::RandomInt(0, count);
-			item = &(p_items[index]);
-			m_inventory.AddItem(item);
+			m_inventory= &p_items[index];
 		}
-		//else dont add anything
+		else
+		{
+			m_inventory = 0;
+		}
 	}
 
 };
 
-//Used for putting the player at the start, if a fresh game?
-//Used for checking if the player has reached the end?
+/*
+
+*/
 
 class Level
 {
 private:
-	Room* m_start;
+	Room* m_start;	//The first room where the player will start.
 	Room* m_end; //The final room which the player must reach.
 
 public:
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Level(Room* p_start, Room* p_end)
 	{
 		m_start = p_start;
@@ -163,6 +214,12 @@ public:
 	{
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Room* GetStart()
 	{
 		return m_start;

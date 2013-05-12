@@ -8,7 +8,13 @@
 class Random
 {
 public:
-	//Return random int in the range
+	
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	static int RandomInt(int lo, int hi)
 	{
 		srand (time(NULL));

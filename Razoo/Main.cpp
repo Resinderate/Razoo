@@ -15,8 +15,8 @@
 
 using namespace std;
 
-void GameLoop(Parser& parser, Player& player, Level& level);
-std::string WordAt(std::string p_input, int p_index);
+void GameLoop(Player& p_player, Level& p_level, Array<Item>& p_items, Array<Enemy>& p_enemy);
+
 
 int main()
 {
@@ -26,67 +26,76 @@ int main()
 	//Need to sort number of things before hand.
 	//Text File?
 
-	HashTable<string, Room> rooms(5, GeneralUtils::Hash);
-	Level level = Initializer::InitializeRooms(rooms, "roomsfile.txt");
+	HashTable<string, Room> rooms(11, GeneralUtils::Hash);
+	string roomsfilename = "roomsfile.txt";
+	Level level = Initializer::InitializeRooms(rooms, roomsfilename);
 
-	Array<Item> items(3);
-	Initializer::InitializeItems(items, "itemsfile.txt");
+	Array<Item> items(5);
+	string itemsfilename = "itemsfile.txt";
+	Initializer::InitializeItems(items, itemsfilename);
 
-	Array<Enemy> enemies(3);
-	Initializer::InitializeEnemies(enemies, "enemiesfile.txt");
+	Array<Enemy> enemies(7);
+	string enemiesfilename = "enemiesfile.txt";
+	Initializer::InitializeEnemies(enemies, enemiesfilename);
 	
 	Login login;
 	Player p1;
 	string filename = login.LoginToGame();
-	Initializer::InitializePlayer(p1, rooms, items, 3, filename);
 
+
+	Initializer::InitializePlayer(p1, rooms, items, filename);
 	//NOW WE HAVE A PLAYER TO WORK WITH
-	Parser parser(p1, enemies, items);
-	GameLoop(parser, p1, level);
-	
 
-	
-	cin.ignore();
 
+	GameLoop(p1, level, items, enemies);
+	
 
 	//NEED A PROPER HASH FUNCTION
-	//Need random enemies and items in rooms when you move.
 	return 0;
 }
 
-void GameLoop(Parser& parser, Player& player, Level& level)
+void GameLoop(Player& p_player, Level& p_level, Array<Item>& p_items, Array<Enemy>& p_enemies)
 {
-
+	
 	//Checks on health and room.
 	//win or lose
 
+	bool exit = false;
+	bool win = false;
+	bool dead = false;
 
 
-	GeneralUtils::PrintInfo(player);
-	while(player.GetCurrentRoom() != level.GetEnd() && player.GetHealth() > 0)
+	GeneralUtils::PrintInfo(p_player);
+	while(!exit && !win && !dead)
 	{
 		string input = InputUtils::GetString(">");
-		parser.Parse(input);
+
+		//true if they wish to exit.
+		//Dealing with input
+		exit = Parser::Parse(input, p_player, p_items, p_enemies);
+
+		if(p_player.GetCurrentRoom()->GetName() == p_level.GetEnd()->GetName())
+			win = true;
+		else if(p_player.GetHealth() <= 0)
+			dead = true;
 	}
 
+	if(!exit)
+	{
+		if(win)
+		{
+			cout << "grats you win!" << endl;
+			//delete file, game over nothing left to do.
+		}
+		else //dead
+		{
+			cout << "Oh, you died. Too bad. I deleted your save file. Better luck next time." << endl;
+			//delete file.
+		}
+	}
+	
 
 }
 
-std::string WordAt(std::string p_input, int p_index)
-	{
-		std::string output;
-		int startpos = 0;
-		int endpos;
-
-		for(int i = 0; i < p_index+1; i++)
-		{
-			endpos = p_input.find_first_of(' ', startpos);
-			output = p_input.substr(startpos, endpos - startpos);
-			cout << output << i << endl;
-			startpos = endpos+1;
-		}
-
-		return output;
-	}
 
 

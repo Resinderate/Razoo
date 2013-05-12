@@ -10,6 +10,12 @@ using namespace std;
 class GeneralUtils
 {
 public:
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	static void PrintInfo(Player& player)
 	{
 
@@ -113,25 +119,20 @@ public:
 		//repeated for the 3 others.
 
 
-		Array<string> items(player.GetCurrentRoom()->GetInventory().Size());
-		items = player.GetCurrentRoom()->GetInventory().GetItemNames();
-		if(items.size() > 0)
+		//Array<string> items = player.GetCurrentRoom()->GetInventory().GetItemNames();
+		
+		if(player.GetCurrentRoom()->GetInventory() != 0)
 		{
-
 			for(int i = 0; i < border; i++)
 				cout << ":";
 			cout << endl;
 			for(int i = 0; i < border; i++)
 				cout << ":";
-			cout << "Items in this location:" << endl;
-
-			for(int i = 0; i < items.size(); i++)
-			{
-				for(int i = 0; i < border; i++)
-				cout << ":";
-				cout << "\t- A " << items[i] << endl;
-			}
-
+			cout << "\tItems in this location:" << endl;
+			if(player.GetCurrentRoom()->GetInventory() == 0)
+				cout << "Its actually null" << endl;
+			player.GetCurrentRoom()->GetInventory()->PrintFormatted();
+			
 		}
 
 		if(player.GetCurrentRoom()->GetEnemy() != 0)
@@ -156,9 +157,10 @@ public:
 	
 
 	/*
-
-
-
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
 	*/
 	static unsigned long int Hash(string p_index)
 	{

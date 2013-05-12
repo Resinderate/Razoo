@@ -21,7 +21,13 @@ Needs some thinking.
 class Initializer
 {
 public:
-	static void InitializeItems(Array<Item>& p_itemarray, std::string p_filename)
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
+	static void InitializeItems(Array<Item>& p_itemarray, std::string& p_filename)
 	{
 		std::ifstream myfile(p_filename);
 
@@ -75,7 +81,13 @@ public:
 		}
 	}
 
-	static void InitializeEnemies(Array<Enemy>& p_enemyarray, std::string p_filename)
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
+	static void InitializeEnemies(Array<Enemy>& p_enemyarray, std::string& p_filename)
 	{
 		std::ifstream myfile(p_filename);
 
@@ -125,7 +137,13 @@ public:
 		}
 	}
 
-	static Level& InitializeRooms(HashTable<std::string, Room>& p_roomtable, std::string p_filename)
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
+	static Level& InitializeRooms(HashTable<std::string, Room>& p_roomtable, std::string& p_filename)
 	{
 		std::ifstream myfile(p_filename);
 		//do stuff
@@ -196,7 +214,6 @@ public:
 
 		for(int i = 0; i < count; i++)
 		{
-			//Need to add a temp room with name "*" and set value to 0;
 			//Each Room, 4 pointers. NSEW
 			if(roomsandexits[i][0] != "*")
 				p_roomtable.Find(rooms[i])->m_data.SetNorth(&p_roomtable.Find(roomsandexits[i][0])->m_data);
@@ -213,7 +230,13 @@ public:
 		return level;
 	}
 
-	static void InitializePlayer(Player& p_player, HashTable<string, Room>& p_rooms, Item* p_items, int p_numItems, std::string p_filename)
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
+	static void InitializePlayer(Player& p_player, HashTable<string, Room>& p_rooms, Array<Item>& p_items, std::string& p_filename)
 	{
 		ifstream playerfile(p_filename);
 
@@ -231,6 +254,7 @@ public:
 		Room* currentRoom;
 		Inventory inventory(100); //Max weight  Hard coded.
 
+		//reading in values from file
 		playerfile.getline(trash, 256);
 		playerfile.getline(trash, 256);
 		playerfile.getline(value, 256);
@@ -255,23 +279,27 @@ public:
 		playerfile.getline(trash, 256);
 		playerfile.getline(value, 256);
 		inventorycount = atoi(value);
+		
+		Player p1(name, health, confidence, humor, speed, currentRoom, inventory);
+		p_player = p1;
 
-		for(int i = 0; i != inventorycount; i++)
+		for(int i = 0; i < inventorycount; i++)
 		{
 			playerfile.getline(value, 256);
 			std::string item(value);
-			for(int j = 0; j != p_numItems; j++)
+			int count = p_items.size();
+			for(int j = 0; j < count; j++)
 			{
 				if(p_items[j].GetName() == item)
 				{
-					inventory.AddItem(&p_items[j]);
+					p_player.GetInventory().AddItem(p_items[j]);
 				}
 			}
 		}
-
-		Player p(name, health, confidence, humor, speed, currentRoom, inventory);
-		p_player = p;
+		p_player.UpdateStats();
+		
 	}
+	
 	
 };
 #endif

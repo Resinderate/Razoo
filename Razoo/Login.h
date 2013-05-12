@@ -14,6 +14,12 @@
 class Login
 {
 private:
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	std::string CreateNewPlayer()
 	{
 		//Make new, enter name and password.
@@ -25,6 +31,14 @@ private:
 			checkName.open(username + ".txt");
 		}
 		std::string password = InputUtils::GetStringRegex("Enter a password: ", "[a-zA-z0-9]{1,30}");
+
+		system("cls");
+		system("cls");
+		cout << "You are located in the southern-most part of the zoo, in the restaurant. All of the animals have broken free and are running amock in the zoo. This includes many dangerous animals so you must make your way to the carpark on the north side of the zoo, so you can escape." << endl;
+		cout << "Press Enter to continue!" << endl;
+		cin.ignore();
+		cin.ignore();
+		system("cls");
 
 		//Distribute points
 		int points = 40;
@@ -39,7 +53,9 @@ private:
 		points -= humor;
 		speed = points; //rest of points put into speed.
 		cout << "Great! The remaining " << points << " points will be placed into Speed for you. " << endl;
-
+		cout << "Press Enter to continue!" << endl;
+		cin.ignore();
+		cin.ignore();
 		//Have the 3 values now.
 		
 		ifstream playerDefaultsFile("defaultplayer.txt");
@@ -86,6 +102,12 @@ private:
 		return username + ".txt";
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	std::string LogInPlayer()
 	{
 		//Read in Users file.
@@ -134,6 +156,12 @@ private:
 		return username + ".txt";
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	std::string encrypt(std::string p_plaintext)
 	{
 		int offset = 6;
@@ -152,6 +180,12 @@ private:
         return output;
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	std::string decrypt(std::string p_ciphertext)
 	{
 		int offset = 6;
@@ -171,6 +205,12 @@ private:
 	}
 
 public:
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	Login()
 	{
 
@@ -181,6 +221,12 @@ public:
 
 	}
 
+	/*
+		Name:	
+		Desc:	
+		Args:	
+		Return:	
+	*/
 	std::string LoginToGame()
 	{
 		//Log in to existing  OR  make new account.
