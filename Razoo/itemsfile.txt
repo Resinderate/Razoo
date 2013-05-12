@@ -1,25 +1,68 @@
 ************* ITEMS FILE *************
-No. of Items:	3
+No. of Items:
+5
 **************************************
-Name:	ASD
-Desc:	asdasdasdasd
-Weight:	123
-Confidence:	123
-Humor:	123
-Speed:	123
+Name:
+Stick
+Desc:
+This is a Stick
+Weight:
+12
+Confidence:
+16
+Humor:
+20
+Speed:
+11
 **************************************
-Name:	ASD
-Desc:	asdasdasdasd
-Desc:	asdasdasdasd
-Weight:	123
-Confidence:	123
-Humor:	123
-Speed:	123
+Name:
+Gun
+Desc:
+This is a Gun
+Weight:
+17
+Confidence:
+25
+Humor:
+8
+Speed:
+12
 **************************************
-Name:	ASD
-Desc:	asdasdasdasd
-Desc:	asdasdasdasd
-Weight:	123
-Confidence:	123
-Humor:	123
-Speed:	123
+Name:
+Balloon
+Desc:
+A colorful balloon
+Weight:
+12
+Confidence:
+5
+Humor:
+20
+Speed:
+12
+**************************************
+Name:
+Nikes
+Desc:
+A new pair of slick trainers
+Weight:
+24
+Confidence:
+13
+Humor:
+8
+Speed:
+25
+**************************************
+Name:
+Mask
+Desc:
+A scary mask from one of the vendors
+Weight:
+20
+Confidence:
+25
+Humor:
+17
+Speed:
+4

@@ -1,17 +1,80 @@
 ************* ENEMY FILE *************
-No. of Enemies:	3
+No. of Enemies:
+7
 **************************************
-Name:	ASD
-Confidence:	123
-Humor:	123
-Speed:	123
+Name::
+Tiger
+Desc::
+A Fierce Tiger
+Confidence::
+30
+Humor::
+7
+Speed::
+20
 **************************************
-Name:	ASD
-Confidence:	123
-Humor:	123
-Speed:	123
+Name::
+Elephant
+Desc::
+A big slow elepahnt
+Confidence::
+12
+Humor::
+27
+Speed::
+14
 **************************************
-Name:	ASD
-Confidence:	123
-Humor:	123
-Speed:	123
+Name::
+Bird
+Desc::
+A quick bird
+Confidence::
+10
+Humor::
+20
+Speed::
+30
+**************************************
+Name::
+Horse
+Desc::
+A Majestic Horse
+Confidence::
+10
+Humor::
+15
+Speed::
+25
+**************************************
+Name::
+Monkey
+Desc::
+A cheeky Monkey
+Confidence::
+15
+Humor::
+30
+Speed::
+15
+**************************************
+Name::
+Snake
+Desc::
+A Slithering Snake
+Confidence::
+35
+Humor::
+15
+Speed::
+5
+**************************************
+Name::
+Rhino
+Desc::
+A charging
+Confidence::
+10
+Humor::
+13
+Speed::
+25

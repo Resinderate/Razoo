@@ -1,11 +1,113 @@
 ************* ROOM FILE *************
-No. of Rooms:	3
+No. of Rooms:
+11
 *************************************
-Name:	ASD
-Exits:	*:The Farm:The Ticket Booth:*
+Name::
+Restaurant
+Description::
+The Zoo's own Restaurnant
+Exits::
+Tiger Pens
+*
+*
+*
 *************************************
-Name:	ASD
-Exits:	*:The Farm:The Ticket Booth:*
+Name::
+Tiger Pens
+Description::
+Home to the Tigers
+Exits::
+Aquarium
+Restaurant
+Stables
+Penguin Corner
 *************************************
-Name:	ASD
-Exits:	*:The Farm:The Ticket Booth:*
+Name::
+Penguin Corner
+Description::
+Housing the watery home of the penguins
+Exits::
+*
+*
+Tiger Pens
+*
+*************************************
+Name::
+Stables
+Description::
+All the different horses kept here
+Exits::
+Reptile House
+*
+*
+Tiger Pens
+*************************************
+Name::
+Aquarium
+Description::
+Countless Fishtanks with every kind of fish
+Exits::
+*
+Tiger Pens
+Reptile House
+*
+*************************************
+Name::
+Reptile House
+Description::
+Dark and warm for the reptiles
+Exits::
+Safari Zone
+Stables
+*
+Aquarium
+*************************************
+Name::
+Safari Zone
+Description::
+The artificial home of africas finest
+Exits::
+Monkey Corner
+Reptile House
+*
+Bug House
+*************************************
+Name::
+Monkey Corner
+Description::
+Lots of ropes and other things for climbing
+Exits::
+*
+Safari Zone
+*
+Ticket Stands
+*************************************
+Name::
+Bug House
+Description::
+Glass containers which are flowing with bugs
+Exits::
+Ticket Stands
+*
+Safari Zone
+*
+*************************************
+Name::
+Ticket Stands
+Description::
+The gateway to the exit of the park
+Exits::
+Carpark
+Bug House
+Monkey Corner
+*
+*************************************
+Name::
+Carpark
+Description::
+The way out of the Zoo
+Exits::
+*
+Ticket Stands
+*
+*

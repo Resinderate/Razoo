@@ -1,0 +1,5 @@
+*********** Default Player Values ************
+Health::
+100
+StartRoom::
+Restaurant
