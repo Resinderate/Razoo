@@ -1,3 +1,8 @@
+/*
+	Ronan Murphy   12/05/13
+	A class representing a player in the game. 
+*/
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -21,10 +26,15 @@ private:
 	Inventory m_inventory;
 public:
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Player
+		Desc:	Constructor for the player
+		Args:	p_name : name of the player
+				p_health : health of the player
+				p_confidence : stat
+				p_humor : stat
+				p_speed : stat
+				p_currentRoom : currentRoom of the player.
+				p_inventory : inventory obj for the player.
 	*/
 	Player(std::string p_name, int p_health, int p_confidence, int p_humor, int p_speed, Room* p_currentRoom, Inventory p_inventory)
 	{
@@ -38,10 +48,9 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Player
+		Desc:	Default Constructor
+		Args:	None
 	*/
 	Player()
 	{
@@ -61,10 +70,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Getters & Setters
+		Desc:	Methods for manipulating member variables.
+		Args:	p_newvalue : where applicable
+		Return:	m_var : where applicable
 	*/
 	std::string GetName()
 	{
@@ -137,10 +146,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	MoveNorth
+		Desc:	Moves the player north from it's current room.
+		Args:	None
+		Return:	None
 	*/
 	void MoveNorth()
 	{
@@ -148,10 +157,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	MoveSouth
+		Desc:	Moves the player south from it's current room.
+		Args:	None
+		Return:	None
 	*/
 	void MoveSouth()
 	{
@@ -159,10 +168,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	MoveEast
+		Desc:	Moves the player east from it's current room.
+		Args:	None
+		Return:	None
 	*/
 	void MoveEast()
 	{
@@ -170,10 +179,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	MoveWest
+		Desc:	Moves the player west from it's current room.
+		Args:	None
+		Return:	None
 	*/
 	void MoveWest()
 	{
@@ -181,18 +190,16 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	PickupItem
+		Desc:	Add the given item to the players inventory if possible
+		Args:	p_item : the item to add to the playes inventory
+		Return:	bool : true if added, false otherwise.
 	*/
 	bool PickupItem(Item& p_item)
 	{
 		if(m_inventory.AddItem(p_item))
 		{
-			m_confidence += p_item.GetConfidence();
-			m_humor += p_item.GetHumor();
-			m_speed =+ p_item.GetSpeed();
+			UpdateStats();
 			return true;
 		}
 		else
@@ -202,12 +209,12 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	SaveGame
+		Desc:	Saves the players current progress in the game to their save file.
+		Args:	None
+		Return:	None
 	*/
-	void SaveGame() //Bad saving of file.
+	void SaveGame() //Unefficient saving of file.
 	{
 		ReduceStats();
 		ofstream savefile(m_name + ".txt");
@@ -235,10 +242,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	UpdateStats
+		Desc:	Increase the stats of the player based on the items they have
+		Args:	None
+		Return:	None
 	*/
 	void UpdateStats()
 	{
@@ -251,10 +258,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	ReduceStats
+		Desc:	Reduced the players stats based on the items they are holding. Used before saving so that inventory can be stored properly without boosting players stats
+		Args:	None
+		Return:	None
 	*/
 	void ReduceStats()
 	{

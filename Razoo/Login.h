@@ -1,3 +1,8 @@
+/*
+	Ronan Murphy   12/05/13
+	A class used for the login of players. Focused on the encapsulation of functions like encrypt(). 
+*/
+
 #ifndef LOGIN_H
 #define LOGIN_H
 
@@ -15,10 +20,10 @@ class Login
 {
 private:
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	CreateNewPlayer
+		Desc:	Way of getting a usable "Save File" by creating a new one, in the form of a new user.
+		Args:	None
+		Return:	string : name of the save file to be used.
 	*/
 	std::string CreateNewPlayer()
 	{
@@ -98,15 +103,14 @@ private:
 		usersfile << "*********" << endl;
 		usersfile.close();
 
-		//return filename;
 		return username + ".txt";
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	LogInPlayer
+		Desc:	Way of getting a usable "Save File" by accessing an existing one based on user given credetials
+		Args:	None
+		Return:	string : name of the save file to be used.
 	*/
 	std::string LogInPlayer()
 	{
@@ -134,6 +138,7 @@ private:
 		
 		//Enter name and pw
 		//2 stage check.
+		//Order(c)
 		std::string username = InputUtils::GetStringRegex("Please enter your username:", "[a-zA-Z0-9]{1,30}");
 		HashEntry<std::string, std::string>* result = logins.Find(username);
 
@@ -152,15 +157,14 @@ private:
 			std::string password = InputUtils::GetStringRegex("please another password:", "[a-zA-Z0-9]{1,30}");
 		}
 
-		//return filename
 		return username + ".txt";
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	encrypt
+		Desc:	encrpyts given text into ciphertext using a simple substitution cipher
+		Args:	p_plaintext : text to encrypt
+		Return:	string : ciphertext
 	*/
 	std::string encrypt(std::string p_plaintext)
 	{
@@ -181,10 +185,10 @@ private:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	decrypt
+		Desc:	decrypts given cipher text based on the previous encrypt function.
+		Args:	p_ciphertext : text to decipher
+		Return:	string : plaintext
 	*/
 	std::string decrypt(std::string p_ciphertext)
 	{
@@ -204,29 +208,10 @@ private:
         return output;
 	}
 
+	
+
 public:
-	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
-	*/
-	Login()
-	{
 
-	}
-
-	~Login()
-	{
-
-	}
-
-	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
-	*/
 	std::string LoginToGame()
 	{
 		//Log in to existing  OR  make new account.
@@ -239,6 +224,67 @@ public:
 			filename = CreateNewPlayer();
 
 		return filename;
+	}
+
+	/*
+		Name:	RemoveUser
+		Desc:	Removes the given users save file and their login details for the usersfile.
+		Args:	p_player : the player to remove
+		Return:	None
+	*/
+	//Order(n) n being the amount of users.
+	void RemoveUser(Player& p_player)
+	{
+		string del = p_player.GetName() + ".txt";
+		remove(del.c_str());
+
+		HashTable<std::string, std::string> logins(50, GeneralUtils::Hash); //Some sort of size.
+		std::string names[50];
+
+		ifstream usersfile("usersfile.txt");
+		char trash[256];
+		char value[256];
+		std::string cipheruser = "";
+		std::string cipherpass = "";
+		usersfile.getline(trash, 256); //header
+
+		int i = 0;
+		while (true) {
+			usersfile.getline(value, 256);
+			cipheruser.assign(value);
+			usersfile.getline(value, 256);
+			cipherpass.assign(value);
+			usersfile.getline(trash, 256);
+			if( usersfile.eof())
+				break;
+			logins.Insert(decrypt(cipheruser), decrypt(cipherpass));
+			names[i] = decrypt(cipheruser);
+			i++;
+		}
+		usersfile.close();
+
+		logins.Remove(p_player.GetName());
+
+		ofstream outfile("usersfile.txt");
+
+		outfile << "******* USERS FILE ***********" << std::endl;
+		int count = i + 1;
+		cout << "count : " << count << endl;
+		for(int j = 0; j < count; j++)
+		{
+			if(logins.Find(names[j]) != 0)
+			{
+				std::string name = names[j];
+				outfile << encrypt(name) << endl;
+				cout << "after print name" << endl;
+			
+				std::string pass = logins.Find(names[j])->m_data;
+				cout << "after assigning entry->data as name." << endl;
+				outfile << encrypt(pass) << endl;
+				cout << "after print pass" << endl;
+				outfile << "*********" << endl;
+			}
+		}
 	}
 };
 #endif

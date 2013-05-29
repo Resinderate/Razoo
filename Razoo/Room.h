@@ -1,8 +1,8 @@
 /*
-	Ronan Murphy
+	Ronan Murphy   12/05/13
 	A class to represent a room in the game.
 
-	& a container class to keep track of the rooms.
+	& a container class to keep track of the rooms as a Level.
 */
 
 #ifndef ROOM_H
@@ -13,10 +13,23 @@
 #include "Enemy.h"
 #include "Random.h"
 
+/*
+	Level & Room as a Datastructure
+	Sort of set up like a LinkedList, with rooms being the nodes, and the Level being the container.
+	Player has access to one room at a time, and can move to any other rooms connected to it.
+	It's extremely fast and you dont have to go searching for the appropriate named room, you just have a pointer to it.
+	You will never be looking for any rooms that are not directly beside you.
+	Never need to Iterate through the rooms.
+	Moving to a new room is Order(c)
 
+	Level holds the "head" and "tail".
+	Head is mostly used for locating where new players should start,
+	Tail is used to check whether the player's current room is the last one, as a win condition.
+*/
 
 
 using namespace std;
+
 
 class Room
 {
@@ -32,10 +45,14 @@ private:
 
 public:
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Room
+		Desc:	Constructor for Room
+		Args:	p_name : name of the room
+				p_desc : desc of the room
+				p_north : pointer to the room north of this room
+				p_south : pointer to the room south of this room
+				p_east : pointer to the room to the east of this room
+				p_west : pointer to the room to the east of this room	
 	*/
 	Room(string p_name, string p_desc, Room* p_north, Room* p_south, Room* p_east, Room* p_west)
 	{
@@ -50,10 +67,9 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Room
+		Desc:	Default Constructor
+		Args:	None
 	*/
 	Room()
 	{
@@ -68,10 +84,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Getters & Setters
+		Desc:	Methods for manipulating member variables.
+		Args:	p_newvalue : where applicable
+		Return:	m_var : where applicable
 	*/
 	string GetName()
 	{
@@ -144,11 +160,12 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	GiveRandomEnemy
+		Desc:	Fills the room with a random enemy from the array provided. 30% chance that none will be added.
+		Args:	p_enemeis : the array of existing enemies to choose from.
+		Return:	None
 	*/
+	//Order(c)
 	void GiveRandomEnemy(Array<Enemy>& p_enemies)
 	{
 		//First see if there will actually be an enemy.
@@ -165,11 +182,12 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
+		Name:	GiveRandomItem
+		Desc:	Fills the room with a random item from the array provided. 20% chance that none will be added.
 		Args:	
 		Return:	
 	*/
+	//Order(c)
 	void GiveRandomItem(Array<Item>& p_items)
 	{
 		
@@ -187,10 +205,6 @@ public:
 
 };
 
-/*
-
-*/
-
 class Level
 {
 private:
@@ -199,9 +213,10 @@ private:
 
 public:
 	/*
-		Name:	
-		Desc:	
-		Args:	
+		Name:	Level
+		Desc:	Level Constructor
+		Args:	p_start : the starting room for the level.
+				p_end : the ending room for the level.
 		Return:	
 	*/
 	Level(Room* p_start, Room* p_end)
@@ -215,10 +230,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Getters
+		Desc:	Methods for retreiving member variables.
+		Args:	None
+		Return:	m_var : where applicable
 	*/
 	Room* GetStart()
 	{

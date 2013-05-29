@@ -1,3 +1,8 @@
+/*
+	Ronan Murphy   12/05/13
+	A Util file related to the getting of valid input from the user. 
+*/
+
 #ifndef INPUTUTILS_H
 #define INPUTUTILS_H
 
@@ -55,10 +60,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	GetString
+		Desc:	Gets a string from the user, after prompting a given message
+		Args:	p_prompt : message to display to the user.
+		Return:	input : users inputter string.
 	*/
 	static string GetString(string p_prompt)
 	{

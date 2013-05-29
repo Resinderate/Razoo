@@ -1,3 +1,8 @@
+/*
+	Ronan Murphy   12/05/13
+	A file container class for a DLinkedList, that acts as an inventory for the player in game. 
+*/
+
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
@@ -8,6 +13,16 @@
 #include <iostream>
 #include <fstream>
 
+
+/*
+	Inventory as Datastructure
+	Container with a DLinkedList.
+	The player has an inventory which isn't limited by size, but by a weight, a seperate variable.
+	Size could be anything so a LinkedList is ideal. No Resizing.
+	The Printing of all of the contents is usually done in batches ie. everything at once, which is o(n), being similar performance compared to other Dstructures.
+	The only drawbacks are are removing named items , and examining named items, which involves iterating through the contents until the correct node is found.
+*/
+
 class Inventory
 {
 private:
@@ -16,10 +31,9 @@ private:
 	int m_maxWeight;
 public:
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Inventory
+		Desc:	Constructor for Inventory
+		Args:	p_maxWeight : maximum weight the inventory will allow from Items
 	*/
 	Inventory(int p_maxWeight)
 	{
@@ -28,10 +42,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Inventory
+		Desc:	Default Constructor
+		Args:	None
+		Return:	None
 	*/
 	Inventory()
 	{
@@ -45,10 +59,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Getters & Setters
+		Desc:	Methods for manipulating member variables.
+		Args:	p_newvalue : where applicable
+		Return:	m_var : where applicable
 	*/
 	int GetWeight()
 	{
@@ -66,11 +80,12 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	PrintNames
+		Desc:	print the present items in the inventory, with no formatting.
+		Args:	None
+		Return:	None
 	*/
+	//Order(n)
 	void PrintNames()
 	{
 		int count = m_inventory.GetCount();
@@ -85,15 +100,15 @@ public:
 				itr.Forth();
 			}
 		}
-		
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	PrintNamesFormated
+		Desc:	Print the present items in the inventory, with formatting suited to the game loop.
+		Args:	None
+		Return:	None
 	*/
+	//Order(n)
 	void PrintNamesFormated()
 	{
 		int count = m_inventory.GetCount();
@@ -115,12 +130,13 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	PrintNamesFile
+		Desc:	Prints the present items in the inventory, with no formatting and into the given ofstream
+		Args:	p_out : ofstream to print to.
+		Return:	None
 	*/
-	void PrintNamesFile(std::ofstream& out)
+	//Order(n)
+	void PrintNamesFile(std::ofstream& p_out)
 	{
 		int count = m_inventory.GetCount();
 		Array<std::string> content(count);
@@ -132,18 +148,19 @@ public:
 
 			for(int i = 0; i < count; i++)
 			{
-				out << itr.Item().GetName() << std::endl;
+				p_out << itr.Item().GetName() << std::endl;
 				itr.Forth();
 			}
 		}
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	AddItem
+		Desc:	Add the given item to the inventory if it doesnt go over the weight limit.
+		Args:	p_item : item to add to the inventory
+		Return:	bool : true if added, false if not.
 	*/
+	//Order(c)
 	bool AddItem(Item p_item)
 	{
 		if(p_item.GetWeight() + m_weight <= m_maxWeight)
@@ -159,11 +176,12 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	SearchByName
+		Desc:	Searches for the given item name int he inventory
+		Args:	p_name : name of the item you are searching for.
+		Return:	Item* : pointer to item found. Is null if nothing found.
 	*/
+	//Order(n)
 	Item* SearchByName(std::string p_name)
 	{
 		DListIterator<Item> itr = m_inventory.GetIterator();
@@ -184,11 +202,12 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	RemoveByName
+		Desc:	Removes the given item named if it is found in the inventory
+		Args:	p_name : name of the item you want to remove
+		Return:	bool : true if removed, flase if not found.
 	*/
+	//Order(n)
 	bool RemoveByName(std::string p_name)
 	{
 		DListIterator<Item> itr = m_inventory.GetIterator();
@@ -214,11 +233,14 @@ public:
 	}
 	
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	TotalStats
+		Desc:	Totals up the stats of all the items present in the inventory, and assigns them to the given variables.
+		Args:	p_confidence
+				p_humor
+				p_speed
+		Return:	None
 	*/
+	//Order(n)
 	void TotalStats(int& p_confidence, int& p_humor, int& p_speed)
 	{
 		DListIterator<Item> itr = m_inventory.GetIterator();

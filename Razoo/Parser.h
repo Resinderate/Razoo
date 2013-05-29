@@ -1,3 +1,8 @@
+/*
+	Ronan Murphy   12/05/13
+	A file containing functions to do with the parsing of user input into useable instructions. 
+*/
+
 #ifndef PARSER_H
 #define PARSER_H
 
@@ -10,10 +15,13 @@ class Parser
 public:
 	
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Parse
+		Desc:	Takes a user command and then figures out what to do with it.
+		Args:	p_input : the user command
+				p_player : the player obj being used
+				p_items : the array of existing items in the game
+				p_enemies : the array of existing enemies in the game
+		Return:	bool : true if the player wishes to exit, false otherwise.
 	*/
 	static bool Parse(std::string& p_input, Player& p_player, Array<Item>& p_items, Array<Enemy>& p_enemies)
 	{
@@ -48,10 +56,11 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	WordAt
+		Desc:	Util for parsing words. Takes and input and the number of the work you wish to take out of it. Based on being seperated by spaces. May loop to start of text in index is greater than the amount of words present
+		Args:	p_input : text to take the word out of
+				p_index : number of the word to take out. (Starting at 0)
+		Return:	string : the word at the given index
 	*/
 	static std::string WordAt(std::string& p_input, int p_index)
 	{
@@ -70,10 +79,13 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Go
+		Desc:	Action to be taken for "Go". Figures out which direction, and performs it.
+		Args:	p_input : the command given by the payer
+				p_player : the player being used.
+				p_items : the array of existing items
+				p_enemies : the array of existing enemies.
+		Return:	None
 	*/
 	static void Go(std::string& p_input, Player& p_player, Array<Item>& p_items, Array<Enemy>& p_enemies)
 	{
@@ -126,10 +138,11 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Examine
+		Desc:	Action to be taken for "Examine". Looks for the specified item/enemy in the vicinity.
+		Args:	p_input : command given by player
+				p_player : the player being used.
+		Return:	None
 	*/
 	static void Examine(std::string& p_input, Player& p_player)
 	{
@@ -158,10 +171,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Fight
+		Desc:	Action to be taken for "Fight". Carries out the fight sequence for fighting an enemy if any.
+		Args:	p_player : the player being used.
+		Return:	None
 	*/
 	static void Fight(Player& p_player)
 	{
@@ -218,10 +231,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Help
+		Desc:	Action to be taken for "Help". Displays a list of useful commands for the player.
+		Args:	None
+		Return:	None
 	*/
 	static void Help()
 	{
@@ -239,10 +252,10 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	ViewInventory
+		Desc:	Action for "Inventory". Lists any items in the players inventory
+		Args:	p_player : player being used
+		Return:	None
 	*/
 	static void ViewInventory(Player& p_player)
 	{
@@ -250,10 +263,11 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Pickup
+		Desc:	Action for "Pickup". Picks up the item named from the room, if available.
+		Args:	p_input : the command from the player
+				p_player : the player being used.
+		Return:	None
 	*/
 	static void Pickup(std::string& p_input, Player& p_player)
 	{
@@ -281,29 +295,32 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Drop
+		Desc:	Action for "Drop". Drops the named item from the players invenory if present. Will take first if duplicates.
+		Args:	p_input : command from the player
+				p_player : the player being used.
+		Return:	None
 	*/
 	static void Drop(std::string& p_input, Player& p_player)
 	{
 		std::string key = WordAt(p_input, 1);
+		p_player.ReduceStats();
 		bool found = p_player.GetInventory().RemoveByName(key);
 		if(found)
 		{
 			cout << "Removed " << key << " from inventory!" << endl;
 			p_player.UpdateStats();
+			
 		}
 		else
 			cout << "Could not find that item in your inventory!" << endl;
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	Save
+		Desc:	Action for "Save". Saves the game to the player's save file.
+		Args:	p_player : the player being used.
+		Return:	None
 	*/
 	static void Save(Player& p_player)
 	{
@@ -311,8 +328,8 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
+		Name:	Exit
+		Desc:	Action for "Exit". Save the game before returning out of the game loop and ending the game.
 		Args:	
 		Return:	
 	*/

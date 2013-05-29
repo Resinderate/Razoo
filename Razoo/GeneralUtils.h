@@ -1,8 +1,14 @@
+/*
+	Ronan Murphy   12/05/13
+	A file for general utils for the game that didn't quite fit anywhere else. 
+*/
+
 #ifndef GENERALUTILS_H
 #define GENERALUTILS_H
 
 #include "Player.h"
 #include <iostream>
+#include <string>
 
 
 using namespace std;
@@ -11,10 +17,10 @@ class GeneralUtils
 {
 public:
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+	Name:	PrintInfo
+	Desc:	Prints the general info needed when entering a room in the game. Lots of formatting 
+	Args:	p_player : the player obj
+	Return:	None
 	*/
 	static void PrintInfo(Player& player)
 	{
@@ -113,14 +119,9 @@ public:
 			cout << "\t\t- To the west you can see: " << player.GetCurrentRoom()->GetWest()->GetName() << endl;
 		}
 		for(int i = 0; i < border; i++)
-				cout << ":";
+			cout << ":";
 		cout << endl;
 
-		//repeated for the 3 others.
-
-
-		//Array<string> items = player.GetCurrentRoom()->GetInventory().GetItemNames();
-		
 		if(player.GetCurrentRoom()->GetInventory() != 0)
 		{
 			for(int i = 0; i < border; i++)
@@ -132,7 +133,7 @@ public:
 			if(player.GetCurrentRoom()->GetInventory() == 0)
 				cout << "Its actually null" << endl;
 			player.GetCurrentRoom()->GetInventory()->PrintFormatted();
-			
+
 		}
 
 		if(player.GetCurrentRoom()->GetEnemy() != 0)
@@ -154,21 +155,31 @@ public:
 
 	}
 
-	
+
+	//Referenced from:
+	//Author: Arash Partow - 2002
+	//URL: http://www.partow.net                                             
+	//URL: http://www.partow.net/programming/hashfunctions/index.html
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+	Name:	Hash
+	Desc:	Hash function that takes strings
+	Args:	p_input : string to hash
+	Return:	hash : index to place entry at.
 	*/
-	static unsigned long int Hash(string p_index)
+	static unsigned long int Hash(string p_input)
 	{
-		//need some proper string hash.
-		return p_index.length();
+		unsigned int b    = 378551;
+		unsigned int a    = 63689;
+		unsigned int hash = 0;
+
+		for(std::size_t i = 0; i < p_input.length(); i++)
+		{
+			hash = hash * a + p_input[i];
+			a    = a * b;
+		}
+
+		return hash;
 	}
-
-	
-
 };
 #endif

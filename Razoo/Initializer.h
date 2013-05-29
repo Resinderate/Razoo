@@ -1,7 +1,6 @@
 /*
-Ronan Murphy
-A class to initialize the body of the game based off the text files provided.
-Needs some thinking.
+	Ronan Murphy   12/05/13
+	A class to initialize the body of the game based off the text files provided. 
 */
 
 #ifndef INITIALIZER_H
@@ -22,11 +21,20 @@ class Initializer
 {
 public:
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	InitializeItems
+		Desc:	Fills the array with items, read from a text file.
+		Args:	p_itemarray : the given array to fill with items
+				p_filename : the file to take the items from
+		Return:	None
 	*/
+
+	/*
+		The datasctructure used is an array.
+		The array of items is used as the stock of items that can be randomly chosen for, and be placed in rooms.
+		When the items are initialized they are simply made one by one and added, and as the amount of items in known in advance, it can't run into space issues.
+		The main benefit of using the array is that when you pick a random number between 0 and N-1, you can access it immediatly, and you don't really care what is inside.
+	*/
+	//Order(n) n being the amount of items
 	static void InitializeItems(Array<Item>& p_itemarray, std::string& p_filename)
 	{
 		std::ifstream myfile(p_filename);
@@ -82,11 +90,21 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	InitializeEnemies
+		Desc:	Fills the given array with Enemies, read from a text file
+		Args:	p_enemies : the array to fill with enemies
+				p_filename : the file to take the enemies from
+		Return:	None
 	*/
+
+	/*
+		The datasctructure used is an array.
+		The array of enemies is used as the stock of enemies that can be randomly chosen, and be placed in rooms.
+		When the enemies are initialized they are simply made one by one and added, and as the amount of items in known in advance, it can't run into space issues.
+		The main benefit of using the array is that when you pick a random number between 0 and N-1, you can access it immediatly, and you don't really care what is inside.
+		The Enemies are used exactly the same as Items.
+	*/
+	//Order(n) n being the amount of enemies
 	static void InitializeEnemies(Array<Enemy>& p_enemyarray, std::string& p_filename)
 	{
 		std::ifstream myfile(p_filename);
@@ -138,11 +156,24 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	InitializeRooms
+		Desc:	Fills a HashTable with rooms from a text file.
+		Args:	p_roomtable : the HashTable to fill.
+				p_filename : the file to take the rooms from.
+		Return:	None
 	*/
+
+	/*
+		The data structure used is a HashTable.
+		It is used as the Rooms contain pointers to other rooms, and cant be fully initialized at one time.
+		The Rooms are read in and placed into a HashTable<string, Room> being their name, and themselves.
+		Each rooms exits and room names are also put into an arrays, of corresponding index Ie. Room r1, is in slot  roomnames[x] & roomexits[x]
+
+		Then with the Order(c) lookup on the hashtable, I can iterate through all of the rooms at Order(n) and assign them to each other.
+		If this was done with an array as a replacement to a hashtable, I think it would be more like Order(n^2)
+		HashTable Implementation is close to Order(n)
+	*/
+	//Order(n) amount of rooms
 	static Level& InitializeRooms(HashTable<std::string, Room>& p_roomtable, std::string& p_filename)
 	{
 		std::ifstream myfile(p_filename);
@@ -150,10 +181,12 @@ public:
 		char trash[256];
 		char value[256];
 
+		
 		//These are terrible names.
 		//Some number bigger than I expect there to be rooms.
-		std::string rooms[20];
-		std::string roomsandexits[20][4];
+		//11 implemented right now
+		std::string rooms[15];
+		std::string roomsandexits[15][4];
 
 		int count;
 
@@ -231,10 +264,13 @@ public:
 	}
 
 	/*
-		Name:	
-		Desc:	
-		Args:	
-		Return:	
+		Name:	InitializePlayer
+		Desc:	Initializes the player given a users "save file" and the containers of Rooms and Items.
+		Args:	p_player : player to initialize
+				p_rooms : store of existing rooms. Save file refers to room by name, and must be match up.
+				p_items : store of existing items. Save file refers to items by name, and must be found.
+				p_filename : file to load player from.
+		Return:	None
 	*/
 	static void InitializePlayer(Player& p_player, HashTable<string, Room>& p_rooms, Array<Item>& p_items, std::string& p_filename)
 	{
@@ -298,6 +334,45 @@ public:
 		}
 		p_player.UpdateStats();
 		
+	}
+
+	/*
+		Name:	InitializeSizes
+		Desc:	Initializes the size of all the structures needed for the game.
+		Args:	p_roomfile : player to initialize
+				p_numRooms : store of existing rooms. Save file refers to room by name, and must be match up.
+				p_itemfile : store of existing items. Save file refers to items by name, and must be found.
+				p_numItems : file to load player from.
+				p_enemyfile
+				p_numEnemies
+		Return:	None
+	*/
+
+	static void InitializeSizes(std::string p_roomfile, int& p_numRooms, std::string p_itemfile, int& p_numItems, std::string p_enemyfile, int& p_numEnemies)
+	{
+		char trash[256];
+		char value[256];
+
+		ifstream roomfile(p_roomfile);
+		roomfile.getline(trash, 256);
+		roomfile.getline(trash, 256);
+		roomfile.getline(value, 256);
+		p_numRooms = atoi(value);
+		roomfile.close();
+
+		ifstream itemfile(p_itemfile);
+		itemfile.getline(trash, 256);
+		itemfile.getline(trash, 256);
+		itemfile.getline(value, 256);
+		p_numItems = atoi(value);
+		itemfile.close();
+
+		ifstream enemyfile(p_enemyfile);
+		enemyfile.getline(trash, 256);
+		enemyfile.getline(trash, 256);
+		enemyfile.getline(value, 256);
+		p_numEnemies = atoi(value);
+		enemyfile.close();
 	}
 	
 	
