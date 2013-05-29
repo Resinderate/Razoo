@@ -10,6 +10,7 @@
 *.suo
 *.user
 *.sln.docstates
+ronan.txt
 
 # Build results
 [Dd]ebug/
